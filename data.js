@@ -12,22 +12,26 @@ export const homeProductData = [
   {
     id: 1,
     image: "/image/sharp-container/1.5 Ltr (1)-Photoroom.webp",
-    title: "1.5 Ltr",
+    title: "1.5 Ltr container",
+    desc: "Compact puncture-proof 1.5L sharp container designed for safe biomedical waste disposal",
   },
   {
     id: 2,
     image: "/image/sharp-container/10 Ltr (1)-Photoroom.webp",
-    title: "10 Ltr",
+    title: "10 Ltr container",
+    desc: "Heavy-duty puncture-proof 10L sharp container for safe biomedical waste disposal",
   },
   {
     id: 3,
-    image: "/image/sharp-container/3 Ltr.webp",
-    title: "3 Ltr",
+    image: "/image/sharp-container/25 Ltr-Photoroom.webp",
+    title: "35 Ltr container",
+    desc: "Durable puncture-proof 25L sharp container for safe and compliant biomedical waste disposal",
   },
   {
     id: 4,
     image: "/image/sharp-container/6Ltr (2)-Photoroom.webp",
-    title: "6 Ltr",
+    title: "6 Ltr container",
+    desc: "Heavy-duty puncture-proof 6L sharp container for safe biomedical waste disposal",
   },
 ];
 
@@ -131,11 +135,70 @@ export const solutionSector = [
     description:
       "We support educational and research institutions with safe and reliable waste disposal solutions for training labs and clinical facilities.",
   },
+];
+
+export const testimonial = [
   {
-    id: 7,
-    icon: Truck,
-    title: "Industrial & Commercial Facilities",
-    description:
-      "Our solutions extend to industrial and commercial environments where hygiene, safety, and organized waste handling are essential.",
+    review:
+      "Sangam Industries provides top-quality sharp containers and needle destroyers. Their products are highly reliable, safe, and compliant with all biomedical waste regulations.",
+    author: "Dr. Rajesh Mehta, Hospital Procurement Manager",
+  },
+  {
+    review:
+      "We have been using Sangam Industries’ needle destroyers for years. They are easy to operate, durable, and have greatly improved safety in our facility.",
+    author: "Anita Sharma, Laboratory Administrator",
+  },
+  {
+    review:
+      "The team at Sangam Industries is professional and responsive. Their products meet our exact requirements, and delivery is always on time.",
+    author: "Dr. Priya Kapoor, Clinic Operations Head",
+  },
+  {
+    review:
+      "Outstanding quality and service! Sangam Industries provides innovative waste management solutions that have significantly improved our operational efficiency. Highly recommended for any healthcare facility.",
+    author: "Dr. Vikram Singh, Medical Director",
+  },
+  {
+    review:
+      "Sangam Industries has helped us maintain hygiene and compliance across multiple hospital branches. Their sharp containers are sturdy and user-friendly.",
+    author: "Ravi Khanna, Healthcare Facility Manager",
+  },
+  {
+    review:
+      "Reliable products, excellent customer support, and competitive pricing. Sangam Industries is our go-to supplier for biomedical waste management solutions.",
+    author: "Sneha Verma, Hospital Safety Officer",
+  },
+];
+
+export const slides = [
+  {
+    image: "/image/home/banner3.webp",
+    title: "Safe Sharps Disposal Starts Here",
+    subtitle: "High-quality sharp containers designed for healthcare safety.",
+    ctaPrimary: { href: "/contact?bulk=true", label: "Bulk Pricing" },
+    ctaSecondary: { href: "/contact", label: "Contact Sales" },
+  },
+  {
+    image: "/image/home/banner1.webp",
+    title: "",
+    subtitle: "",
+    ctaPrimary: { href: "/product", label: "Our Products" },
+    ctaSecondary: { href: "/contact", label: "Contact Us" },
+  },
+  {
+    image: "/image/home/banner2.webp",
+    title: "Sharp Container Manufacturer",
+    subtitle:
+      "Hygienic, puncture-resistant containers for safe sharps disposal.",
+    ctaPrimary: { href: "/product", label: "See Solutions" },
+    ctaSecondary: { href: "/contact", label: "Request Quote" },
+  },
+
+  {
+    image: "/image/home/banner4.jpg",
+    title: "Designed for Safety. Built for Compliance.",
+    subtitle: "Reliable sharp containers for medical and clinical use.",
+    ctaPrimary: { href: "/contact?bulk=true", label: "Bulk Pricing" },
+    ctaSecondary: { href: "/contact", label: "Contact Sales" },
   },
 ];

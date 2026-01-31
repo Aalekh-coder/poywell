@@ -44,6 +44,7 @@ const Navbar = () => {
               src={"/image/nav/logo.webp"}
               className="h-10 w-auto"
             />
+            <p className="text-white text-[12px] font-semibold">Sangam Plastic Industries Pvt. Ltd.</p>
           </motion.div>
 
           {/* Desktop Menu */}
@@ -102,6 +103,10 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
             ))}
+          </div>
+
+          <div className="bg-white/50 px-3 rounded-xl">
+            <Image src={"/image/nav/gem.webp"} width={1000} height={1000} alt="gem" className="w-40 h-auto"/>
           </div>
 
           {/* Mobile menu button */}

@@ -1,6 +1,7 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Teko } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Layout/Navbar";
+import Footer from "@/components/Layout/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -9,6 +10,13 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+
+
+const teko = Teko({
+  variable: "--font-teko",
   subsets: ["latin"],
 });
 
@@ -22,10 +30,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <Navbar/>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${teko.variable} antialiased`}
       >
         {children}
       </body>
+      <Footer/>
     </html>
   );
 }

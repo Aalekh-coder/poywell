@@ -1,7 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { faqs, homeProductData, solutionSector } from "@/data";
+import {
+  faqs,
+  homeProductData,
+  slides,
+  solutionSector,
+  testimonial,
+} from "@/data";
 import {
   Clock,
   ShieldCheck,
@@ -10,8 +16,11 @@ import {
   SlidersHorizontal,
   Truck,
   ChevronDown,
+  LockKeyhole,
+  Package,
+  FlaskConical,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
 const Home = () => {
@@ -27,8 +36,27 @@ const Home = () => {
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
 
+  const [current, setCurrent] = useState(0);
+  const autoplayRef = useRef(null);
+
+  useEffect(() => {
+    autoplayRef.current = () => setCurrent((c) => (c + 1) % slides.length);
+  }, [slides.length]);
+
+  useEffect(() => {
+    const play = () => autoplayRef.current();
+    const id = setInterval(play, 5000);
+    return () => clearInterval(id);
+  }, []);
+
+  const goPrev = () =>
+    setCurrent((c) => (c - 1 + slides.length) % slides.length);
+  const goNext = () => setCurrent((c) => (c + 1) % slides.length);
+
+  // px-2 md:px-10 lg:px-20
+
   return (
-    <div className="px-2 md:px-10 lg:px-20">
+    <div className="">
       {/* success message  */}
       <AnimatePresence>
         {formSubmitted && (
@@ -43,20 +71,83 @@ const Home = () => {
         )}
       </AnimatePresence>
 
+      {/* hero carousel */}
+      <section className="relative w-full h-[60vh] md:h-[70vh] lg:h-[80vh] overflow-hidden">
+        <AnimatePresence initial={false} mode="wait">
+          <motion.div
+            key={current}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.6 }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={slides[current].image}
+              alt={slides[current].title}
+              fill
+              priority
+              className="object-cover "
+            />
 
-      <section className="py-5">
-        <h2 className="text-center font-bold text-2xl md:text-3xl">
+            <div className="absolute top-14 md:top-14 md:left-10 lg:top-30 lg:flex flex-col justify-center px-6 ">
+              <h2 className="text-black font-extrabold text-3xl md:text-4xl  lg:text-7xl max-w-2xl md:w-90  lg:w-full font-teko lg:ml-14">
+                {slides[current].title}
+              </h2>
+              <p className="mt-4 text-lg md:text-2xl text-black w-40 md:w-80 lg:w-[450px] lg:ml-14">
+                {slides[current].subtitle}
+              </p>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* controls */}
+        <button
+          onClick={goPrev}
+          aria-label="Previous slide"
+          className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full hover:bg-black/60"
+        >
+          ‹
+        </button>
+
+        <button
+          onClick={goNext}
+          aria-label="Next slide"
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full hover:bg-black/60"
+        >
+          ›
+        </button>
+
+        {/* indicators */}
+        <div className="absolute left-1/2 -translate-x-1/2 bottom-6 flex gap-2">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`w-3 h-2 rounded-full transition-all ${
+                i === current ? "bg-white" : "bg-white/40"
+              }`}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* second section  */}
+      <section className="py-5 px-2 md:px-10 lg:px-20 md:py-10 lg:py-20">
+        <h2 className="text-center font-bold text-2xl md:text-4xl lg:px-40 font-teko">
           Your Trusted Sharp Container & Needle Destroyer Manufacturer Since
           1988
         </h2>
         <p className="py-3 text-justify">
-          Established in 1988, Sangam Industries has been a trusted Sharp
-          Container Manufacturer and Needle Destroyer Manufacturer, delivering
-          high-quality biomedical waste management solutions for hospitals,
-          clinics, laboratories, and healthcare institutions across India. With
-          decades of manufacturing excellence, we specialize in producing
-          durable, safe, and regulation-compliant products designed to ensure
-          secure disposal of medical sharps and needles.
+          Established in 1988,{" "}
+          <strong>Sangam Plastic Industries Pvt Ltd</strong> has been a trusted
+          Sharp Container Manufacturer and Needle Destroyer Manufacturer,
+          delivering high-quality biomedical waste management solutions for
+          hospitals, clinics, laboratories, and healthcare institutions across
+          India. With decades of manufacturing excellence, we specialize in
+          producing durable, safe, and regulation-compliant products designed to
+          ensure secure disposal of medical sharps and needles.
         </p>
         <p className="py-3 text-justify ">
           Based in Delhi, India, our advanced manufacturing facility is equipped
@@ -76,38 +167,41 @@ const Home = () => {
       </section>
 
       {/* product section  */}
-      <section className="py-5">
-        <p className="font-bold text-center  text-2xl md:text-3xl">
+      <section className="py-5 px-2 md:px-10 lg:px-20">
+        <p className="font-bold text-center  text-2xl md:text-4xl font-teko">
           Our Products
         </p>
         <p className="font-medium text-lg text-center pb-2">
           Reliable Biomedical Waste Management Solutions
         </p>
         <p className="text-center">
-          At <strong>Sangam Industries</strong>, we manufacture and supply a
-          comprehensive range of high-quality biomedical waste management
-          products designed to ensure safety, hygiene, and regulatory compliance
-          in healthcare environments.
+          At{" "}
+          <strong className="capitalize">
+            Sangam plastic industries Pvt Ltd
+          </strong>
+          , we manufacture and supply a comprehensive range of high-quality
+          biomedical waste management products designed to ensure safety,
+          hygiene, and regulatory compliance in healthcare environments.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8  mt-6">
-          {homeProductData.map(({ id, image, title }) => (
+          {homeProductData.map(({ id, image, title, desc }) => (
             <div
-              className="group flex flex-col bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
+              className="group flex flex-col bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden justify-center"
               key={id}
             >
-              <div className="relative h-64 w-full bg-gray-50 overflow-hidden">
+              <div className="relative h-64 w-full  overflow-hidden">
                 <Image
                   src={image}
                   alt={title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  width={1000}
+                  height={1000}
+                  className="object-cover group-hover:scale-105 transition-transform duration-500 p-5"
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  {title}
-                </h3>
+                <h3 className="text-xl font-bold text-gray-900 ">{title}</h3>
+                <p className="py-3">{desc}</p>
                 <button className="w-full py-3 px-4 bg-[#0971CE] text-white rounded-xl font-medium hover:bg-gray-800 transition-colors">
                   View Details
                 </button>
@@ -118,15 +212,73 @@ const Home = () => {
       </section>
 
       {/* counter   */}
+      <section className="flex flex-col lg:flex-row">
+        <div className="relative lg:w-1/2">
+          <Image
+            src={"/image/medication-disposal.jpeg"}
+            width={1000}
+            height={1000}
+            alt="medication-disposal"
+            className=" w-full h-auto"
+          />
+          <div className="bg-white absolute bottom-0 w-60 px-4 py-3 md:w-105 md:px-8 md:py-10">
+            <p className="text-lg md:text-2xl">Designed for Safety & Hygiene</p>
+            <p className="text-sm font-medium text-gray-500 md:text-lg">
+              We prioritize infection control and workplace safety by designing
+              products that help prevent needle-stick injuries.
+            </p>
+            <button className="bg-[#0971CE] text-white font-bold px-5 py-2 mt-2 text-sm rounded-lg">
+              Learn More About
+            </button>
+          </div>
+        </div>
 
-      <section>
-        <div></div>
-        <div></div>
+        <div className="bg-[#0971CE] px-4 py-6 md:px-10 lg:w-1/2 lg:flex lg:flex-col lg:justify-center lg:gap-5">
+          <div>
+            <p className="font-bold text-white text-3xl md:text-4xl mb-3 font-teko">
+              Pharmaceutical Companies
+            </p>
+            <p className="text-white font-medium pr-2 pl-2 md:p-0">
+              Our waste management products help pharmaceutical companies
+              maintain clean
+            </p>
+          </div>
+
+          <div className="mt-5 flex flex-col gap-7 lg:flex-row">
+            <div className="flex flex-col gap-3">
+              <LockKeyhole color="white" size={45} />
+              <span className="text-3xl text-white font-bold font-teko md:text-4xl">6.5K+</span>
+              <p className="text-lg font-medium text-white ">
+                Polywell collection receptacles in Market
+              </p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <Package color="white" size={45} />
+              <span className="text-3xl text-white font-bold font-teko md:text-4xl">100K+</span>
+              <p className="text-lg font-medium text-white">
+                Polywell patented inner liners return for destruction.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <FlaskConical color="white" size={45} />
+              <span className="text-3xl text-white font-bold font-teko md:text-4xl">6.5K+</span>
+              <p className="text-lg font-medium text-white">
+                Pound of medication properly destroyed
+              </p>
+            </div>
+          </div>
+
+          <p className="mt-4 font-semibold text-white md:pb-5">
+            Our sharp containers are suitable for hospitals, clinics,
+            laboratories, and healthcare facilities, ensuring safe biomedical
+            waste handling and reduced risk of needle-stick injuries.
+          </p>
+        </div>
       </section>
 
       {/* why health leader trust  */}
-      <section className="py-10 mt-8 bg-gray-50 rounded-2xl p-6">
-        <h3 className="text-2xl md:text-3xl font-bold text-center">
+      <section className="py-10 mt-8 bg-gray-50 rounded-2xl px-2 md:px-10 lg:px-20">
+        <h3 className="text-2xl md:text-4xl font-bold text-center font-teko">
           Why Healthcare Leaders Trust Sangam Industries
         </h3>
 
@@ -219,7 +371,7 @@ const Home = () => {
       </section>
 
       {/* cta  */}
-      <section className="py-12 mt-8 bg-gradient-to-r from-[#0971CE] to-[#2e86f9] text-white rounded-2xl p-8">
+      <section className="py-12 mt-8 bg-gradient-to-r from-[#0971CE] to-[#2e86f9] text-white rounded-2xl mx-2 p-8 lg:mx-10">
         <div className="max-w-4xl mx-auto text-center">
           <h3 className="text-2xl md:text-3xl font-bold">
             Need Bulk Supply for Hospitals or Healthcare Facilities?
@@ -255,19 +407,22 @@ const Home = () => {
       </section>
 
       {/* supporting multiple  */}
-      <section className="py-5 md:py-10">
-        <h3 className="text-2xl md:text-3xl font-bold text-center">
+      <section className="py-5 md:py-10 px-2 md:px-10 lg:px-20">
+        <h3 className="text-2xl md:text-4xl font-bold text-center font-teko">
           Supporting Multiple Sectors with Safe Waste Solutions
         </h3>
 
         <p className="text-justify py-2">
-          At <strong>Sangam Industries</strong>, we cater to a wide range of
-          industries by providing high-quality sharp containers, and needle
-          destroyers etc. designed to meet strict safety, hygiene, and
-          regulatory standards. Our products are trusted by healthcare
-          providers, institutions, and commercial organizations that require
-          safe, reliable, and long-lasting solutions for medical and hazardous
-          waste disposal.
+          At{" "}
+          <strong className="capitalize">
+            Sangam plastic industries Pvt. Ltd.
+          </strong>
+          , we cater to a wide range of industries by providing high-quality
+          sharp containers, and needle destroyers etc. designed to meet strict
+          safety, hygiene, and regulatory standards. Our products are trusted by
+          healthcare providers, institutions, and commercial organizations that
+          require safe, reliable, and long-lasting solutions for medical and
+          hazardous waste disposal.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-8">
@@ -293,52 +448,99 @@ const Home = () => {
       </section>
 
       {/* A Trusted Manufacturer of Sharp  */}
-      <section className="py-3">
-        <p className="text-sm text-center">
-          A Trusted Manufacturer of Sharp Containers & Needle Destroyers
-        </p>
-        <h1 className="text-center py-2 font-bold text-2xl md:text-3xl">
-          Sharp Container Manufacturer in India
-        </h1>
-        <p className="text-justify">
-          As a trusted <strong>sharp container manufacturer</strong>, Sangam
-          Industries produces a wide range of durable, puncture-resistant
-          containers designed for the safe disposal of needles, syringes,
-          blades, and other medical sharps. Our sharp containers are suitable
-          for hospitals, clinics, laboratories, and healthcare facilities,
-          ensuring safe biomedical waste handling and reduced risk of
-          needle-stick injuries.
-        </p>
-
-        <div className="mt-4">
-          <p className="font-semibold mb-2">We focus on:</p>
-          <ul className="list-disc pl-5 space-y-1">
-            <li>
-              <strong>Safety</strong>: Puncture-proof and leak-resistant for
-              secure disposal
-            </li>
-            <li>
-              <strong>Durability</strong>: Made from high-quality,
-              impact-resistant materials
-            </li>
-            <li>
-              <strong>Compliance</strong>: Designed to meet biomedical waste
-              management regulations
-            </li>
-          </ul>
-
-          <p className="mt-4">
-            Whether it’s a hospital, laboratory, or medical center, our sharp
-            containers provide reliable, safe, and hygienic solutions for
-            medical waste disposal.
+      <section className="py-3 flex flex-col gap-5 md:gap-8 lg:flex-row lg:items-center px-2 md:px-10 lg:px-20 bg-[#37a2ff17] lg:py-10">
+        <div className="lg:w-1/2">
+          <Image
+            src={
+              "https://i.pinimg.com/1200x/ba/1c/50/ba1c50065886b2eb7edf3b4d8eaca677.jpg"
+            }
+            width={1000}
+            height={1000}
+            alt="biohazard image"
+            className="rounded-lg"
+          />
+        </div>
+        <div className="lg:w-1/2">
+          <p className="text-sm text-center">
+            A Trusted Manufacturer of Sharp Containers & Needle Destroyers
           </p>
+          <h1 className=" py-2 font-bold text-2xl md:text-4xl font-teko ">
+            Sharp Container Manufacturer in India
+          </h1>
+          <p className=" lg:text-lg">
+            As a trusted <strong>sharp container manufacturer</strong>, Sangam
+            Industries produces a wide range of durable, puncture-resistant
+            containers designed for the safe disposal of needles, syringes,
+            blades, and other medical sharps. Our sharp containers are suitable
+            for hospitals, clinics, laboratories, and healthcare facilities,
+            ensuring safe biomedical waste handling and reduced risk of
+            needle-stick injuries.
+          </p>
+
+          <div className="mt-4">
+            <p className="font-semibold mb-2">We focus on:</p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>
+                <strong>Safety</strong>: Puncture-proof and leak-resistant for
+                secure disposal
+              </li>
+              <li>
+                <strong>Durability</strong>: Made from high-quality,
+                impact-resistant materials
+              </li>
+              <li>
+                <strong>Compliance</strong>: Designed to meet biomedical waste
+                management regulations
+              </li>
+            </ul>
+
+            <p className="mt-4">
+              Whether it’s a hospital, laboratory, or medical center, our sharp
+              containers provide reliable, safe, and hygienic solutions for
+              medical waste disposal.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* testimonial  */}
+      <section className="py-10 mt-10 px-2 md:px-10 lg:px-20">
+        <div className="max-w-6xl mx-auto">
+          <h3 className="text-2xl md:text-4xl font-bold text-center mb-2 font-teko">
+            Trusted Solutions, Satisfied Clients
+          </h3>
+          <p className="text-center text-gray-600 mb-8">
+            Hear from healthcare professionals and institutions using our
+            products.
+          </p>
+
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {testimonial.map(({ review, author }, idx) => (
+              <motion.div
+                key={author + idx}
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.08 }}
+                className="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition"
+                role="article"
+                aria-label={`Testimonial from ${author}`}
+              >
+                <blockquote className="text-gray-700 italic">
+                  “{review}”
+                </blockquote>
+                <footer className="mt-4 text-sm font-semibold text-gray-900 ">
+                  {author}
+                </footer>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* faq section  */}
-
-      <section className="py-10 mt-8">
-        <h3 className="text-2xl md:text-3xl font-bold text-center mb-2">
+      <section className="py-10 mt-8 px-2 md:px-10 lg:px-20">
+        <h3 className="text-2xl md:text-4xl font-bold text-center mb-2 font-teko">
           Frequently Asked Questions (FAQs)
         </h3>
         <p className="text-center text-gray-600 mb-8">
@@ -386,178 +588,179 @@ const Home = () => {
       </section>
 
       {/* query form  */}
-      <section className="py-10 mt-8 flex flex-col md:flex-row gap-8 md:items-center">
-        <div className="md:w-1/2">
-          <h3 className="text-2xl md:text-3xl font-bold mb-2">
-            Request a Quote or Product Catalog Today!
-          </h3>
-          <p className="text-gray-600 mb-6">
-            Fill out the form below and our team will get back to you shortly
-          </p>
-
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setFormSubmitted(true);
-              setFormData({
-                fullName: "",
-                email: "",
-                phone: "",
-                organization: "",
-                productInterest: "",
-                quantity: "",
-                message: "",
-              });
-              setTimeout(() => setFormSubmitted(false), 4000);
-            }}
-            className="space-y-4"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Full Name */}
-              <div>
-                <label className="block text-sm font-medium text-gray-900 mb-1">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.fullName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, fullName: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 transition"
-                  placeholder="Your name"
-                />
-              </div>
-
-              {/* Email Address */}
-              <div>
-                <label className="block text-sm font-medium text-gray-900 mb-1">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 transition"
-                  placeholder="your@email.com"
-                />
-              </div>
-
-              {/* Phone Number */}
-              <div>
-                <label className="block text-sm font-medium text-gray-900 mb-1">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  required
-                  value={formData.phone}
-                  onChange={(e) =>
-                    setFormData({ ...formData, phone: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 transition"
-                  placeholder="+91 XXXXX XXXXX"
-                />
-              </div>
-
-              {/* Organization / Hospital Name */}
-              <div>
-                <label className="block text-sm font-medium text-gray-900 mb-1">
-                  Organization / Hospital Name
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.organization}
-                  onChange={(e) =>
-                    setFormData({ ...formData, organization: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 transition"
-                  placeholder="Hospital or clinic name"
-                />
-              </div>
-
-              {/* Product Interest Dropdown */}
-              <div>
-                <label className="block text-sm font-medium text-gray-900 mb-1">
-                  Product Interest
-                </label>
-                <select
-                  required
-                  value={formData.productInterest}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      productInterest: e.target.value,
-                    })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 transition"
-                >
-                  <option value="">Select a product</option>
-                  {homeProductData.map(({ id, title }) => (
-                    <option key={id} value={title}>
-                      {title}
-                    </option>
-                  ))}
-                  <option value="all">All Products</option>
-                </select>
-              </div>
-
-              {/* Quantity / Requirement */}
-              <div>
-                <label className="block text-sm font-medium text-gray-900 mb-1">
-                  Quantity / Requirement
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.quantity}
-                  onChange={(e) =>
-                    setFormData({ ...formData, quantity: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 transition"
-                  placeholder="e.g., 100 units per month"
-                />
-              </div>
-            </div>
-
-            {/* Message / Special Instructions */}
-            <div>
-              <label className="block text-sm font-medium text-gray-900 mb-1">
-                Message / Special Instructions
-              </label>
-              <textarea
-                value={formData.message}
-                onChange={(e) =>
-                  setFormData({ ...formData, message: e.target.value })
-                }
-                rows="4"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 transition resize-none"
-                placeholder="Tell us about your requirements..."
-              />
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full py-3 px-4 bg-[#0971CE] text-white rounded-xl font-semibold hover:bg-[#145ec0] transition-colors shadow-md hover:shadow-lg"
+      <section className="py-10 mt-8 bg-gray-50">
+        <h3 className="text-2xl md:text-4xl font-bold mb-2 text-center font-teko">
+          Request a Quote or Product Catalog Today!
+        </h3>
+        <p className="text-gray-600 mb-6 text-center">
+          Fill out the form below and our team will get back to you shortly
+        </p>
+        <div className="flex flex-col md:flex-row gap-8 md:items-center px-2 md:px-10 lg:px-20">
+          <div className="md:w-1/2">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setFormSubmitted(true);
+                setFormData({
+                  fullName: "",
+                  email: "",
+                  phone: "",
+                  organization: "",
+                  productInterest: "",
+                  quantity: "",
+                  message: "",
+                });
+                setTimeout(() => setFormSubmitted(false), 4000);
+              }}
+              className="space-y-4 bg-white p-8 rounded-2xl shadow-2xl"
             >
-              Request a Quote
-            </button>
-          </form>
-        </div>
-        <div className="md:w-1/2 flex items-center justify-center">
-          <Image
-            width={500}
-            height={500}
-            alt="contact"
-            src={"/image/sharp-container/IMG_9304-Photoroom.webp"}
-            className=""
-          />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Full Name */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-900 mb-1">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.fullName}
+                    onChange={(e) =>
+                      setFormData({ ...formData, fullName: e.target.value })
+                    }
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 transition"
+                    placeholder="Your name"
+                  />
+                </div>
+
+                {/* Email Address */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-900 mb-1">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 transition"
+                    placeholder="your@email.com"
+                  />
+                </div>
+
+                {/* Phone Number */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-900 mb-1">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={formData.phone}
+                    onChange={(e) =>
+                      setFormData({ ...formData, phone: e.target.value })
+                    }
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 transition"
+                    placeholder="+91 XXXXX XXXXX"
+                  />
+                </div>
+
+                {/* Organization / Hospital Name */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-900 mb-1">
+                    Organization / Hospital Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.organization}
+                    onChange={(e) =>
+                      setFormData({ ...formData, organization: e.target.value })
+                    }
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 transition"
+                    placeholder="Hospital or clinic name"
+                  />
+                </div>
+
+                {/* Product Interest Dropdown */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-900 mb-1">
+                    Product Interest
+                  </label>
+                  <select
+                    required
+                    value={formData.productInterest}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        productInterest: e.target.value,
+                      })
+                    }
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 transition"
+                  >
+                    <option value="">Select a product</option>
+                    {homeProductData.map(({ id, title }) => (
+                      <option key={id} value={title}>
+                        {title}
+                      </option>
+                    ))}
+                    <option value="all">All Products</option>
+                  </select>
+                </div>
+
+                {/* Quantity / Requirement */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-900 mb-1">
+                    Quantity / Requirement
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.quantity}
+                    onChange={(e) =>
+                      setFormData({ ...formData, quantity: e.target.value })
+                    }
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 transition"
+                    placeholder="e.g., 100 units per month"
+                  />
+                </div>
+              </div>
+
+              {/* Message / Special Instructions */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-1">
+                  Message / Special Instructions
+                </label>
+                <textarea
+                  value={formData.message}
+                  onChange={(e) =>
+                    setFormData({ ...formData, message: e.target.value })
+                  }
+                  rows="4"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 transition resize-none"
+                  placeholder="Tell us about your requirements..."
+                />
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full py-3 px-4 bg-[#0971CE] text-white rounded-xl font-semibold hover:bg-[#145ec0] transition-colors shadow-md hover:shadow-lg"
+              >
+                Request a Quote
+              </button>
+            </form>
+          </div>
+          <div className="md:w-1/2 flex items-center justify-center">
+            <Image
+              width={500}
+              height={500}
+              alt="contact"
+              src={"/image/sharp-container/IMG_9304-Photoroom.webp"}
+              className=""
+            />
+          </div>
         </div>
       </section>
     </div>
