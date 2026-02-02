@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import {
+  cirtificate,
   faqs,
   homeProductData,
   slides,
@@ -53,8 +54,6 @@ const Home = () => {
     setCurrent((c) => (c - 1 + slides.length) % slides.length);
   const goNext = () => setCurrent((c) => (c + 1) % slides.length);
 
-  // px-2 md:px-10 lg:px-20
-
   return (
     <div className="">
       {/* success message  */}
@@ -87,7 +86,7 @@ const Home = () => {
               alt={slides[current].title}
               fill
               priority
-              className="object-cover "
+              className="object-cover"
             />
 
             <div className="absolute top-14 md:top-14 md:left-10 lg:top-30 lg:flex flex-col justify-center px-6 ">
@@ -247,21 +246,27 @@ const Home = () => {
           <div className="mt-5 flex flex-col gap-7 lg:flex-row">
             <div className="flex flex-col gap-3">
               <LockKeyhole color="white" size={45} />
-              <span className="text-3xl text-white font-bold font-teko md:text-4xl">6.5K+</span>
+              <span className="text-3xl text-white font-bold font-teko md:text-4xl">
+                6.5K+
+              </span>
               <p className="text-lg font-medium text-white ">
                 Polywell collection receptacles in Market
               </p>
             </div>
             <div className="flex flex-col gap-3">
               <Package color="white" size={45} />
-              <span className="text-3xl text-white font-bold font-teko md:text-4xl">100K+</span>
+              <span className="text-3xl text-white font-bold font-teko md:text-4xl">
+                100K+
+              </span>
               <p className="text-lg font-medium text-white">
                 Polywell patented inner liners return for destruction.
               </p>
             </div>
             <div className="flex flex-col gap-3">
               <FlaskConical color="white" size={45} />
-              <span className="text-3xl text-white font-bold font-teko md:text-4xl">6.5K+</span>
+              <span className="text-3xl text-white font-bold font-teko md:text-4xl">
+                6.5K+
+              </span>
               <p className="text-lg font-medium text-white">
                 Pound of medication properly destroyed
               </p>
@@ -447,6 +452,60 @@ const Home = () => {
         </div>
       </section>
 
+      {/* certificates  */}
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-3xl md:text-5xl font-bold text-center font-teko">
+              Our Certifications
+            </h3>
+            <p className="text-center text-gray-600 mb-2 text-lg">
+              Committed to Quality and International Standards
+            </p>
+          </motion.div>
+
+          <div
+            className="relative overflow-hidden py-2"
+            style={{
+              maskImage:
+                "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+            }}
+          >
+            <motion.div
+              className="flex gap-6"
+              animate={{ x: ["0%", "-100%"] }}
+              transition={{ ease: "linear", duration: 15, repeat: Infinity }}
+            >
+              {[...cirtificate, ...cirtificate].map((cert, index) => (
+                <motion.div
+                  key={index}
+                  whileHover={{ y: -8 }}
+                  transition={{ duration: 0.3 }}
+                  className="shrink-0 w-48 h-56 sm:w-56 sm:h-64 md:w-64 md:h-72 lg:w-72 lg:h-80 relative"
+                >
+                  <div className="w-full h-full  rounded-2xl  shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden p-2">
+                    <div className="w-full h-full relative rounded-xl flex items-center justify-center">
+                      <Image
+                        src={cert}
+                        alt={`Certificate ${index + 1}`}
+                        fill
+                        sizes="(max-width: 640px) 192px, (max-width: 768px) 224px, (max-width: 1024px) 256px, 288px"
+                        className="object-contain p-4 transition-transform duration-300 hover:scale-105"
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* A Trusted Manufacturer of Sharp  */}
       <section className="py-3 flex flex-col gap-5 md:gap-8 lg:flex-row lg:items-center px-2 md:px-10 lg:px-20 bg-[#37a2ff17] lg:py-10">
         <div className="lg:w-1/2">
@@ -500,6 +559,51 @@ const Home = () => {
               medical waste disposal.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* product section  */}
+      <section className="py-5 px-2 md:px-10 lg:px-20 ">
+        <p className="font-bold text-center  text-2xl md:text-4xl font-teko">
+          Our other Products
+        </p>
+        {/* <p className="font-medium text-lg text-center pb-2">
+          Reliable Biomedical Waste Management Solutions
+        </p> */}
+        {/* <p className="text-center">
+          At{" "}
+          <strong className="capitalize">
+            Sangam plastic industries Pvt Ltd
+          </strong>
+          , we manufacture and supply a comprehensive range of high-quality
+          biomedical waste management products designed to ensure safety,
+          hygiene, and regulatory compliance in healthcare environments.
+        </p> */}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8  mt-6">
+          {homeProductData.map(({ id, image, title, desc }) => (
+            <div
+              className="group flex flex-col bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden justify-center"
+              key={id}
+            >
+              <div className="relative h-64 w-full  overflow-hidden">
+                <Image
+                  src={image}
+                  alt={title}
+                  width={1000}
+                  height={1000}
+                  className="object-cover group-hover:scale-105 transition-transform duration-500 p-5"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-gray-900 ">{title}</h3>
+                <p className="py-3">{desc}</p>
+                <button className="w-full py-3 px-4 bg-[#0971CE] text-white rounded-xl font-medium hover:bg-gray-800 transition-colors">
+                  View Details
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 

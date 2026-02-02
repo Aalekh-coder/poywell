@@ -6,6 +6,15 @@ import {
   Users,
   GraduationCap,
   Truck,
+  SquareStack,
+  TicketCheck,
+  CirclePile,
+  DraftingCompass,
+  LaptopMinimalCheck,
+  UserCheck,
+  CheckCheck,
+  Atom,
+  Leaf,
 } from "lucide-react";
 
 export const homeProductData = [
@@ -201,4 +210,75 @@ export const slides = [
     ctaPrimary: { href: "/contact?bulk=true", label: "Bulk Pricing" },
     ctaSecondary: { href: "/contact", label: "Contact Sales" },
   },
+];
+
+export const aboutOurVision = [
+  {
+    title: "Delivering High-Quality Biomedical Waste Solutions",
+    desc: "We specialize in manufacturing sharp containers, needle destroyers, puncture-proof boxes, and biomedical waste management products using premium-grade, puncture-resistant materials. Every product is designed to ensure safety, hygiene, durability, and compliance with biomedical waste management standards.",
+    icon: SquareStack,
+  },
+  {
+    title: "Ensuring Customer Satisfaction",
+    desc: "Our customers remain at the center of our operations. We offer customized solutions, bulk production capabilities, consistent quality, timely delivery, and responsive customer support—ensuring hospitals, laboratories, and healthcare institutions receive reliable and efficient service.",
+    icon: TicketCheck,
+  },
+  {
+    title: "Promoting Safety & Sustainability",
+    desc: "As a responsible Sharp Container Manufacturer and Needle Destroyer Manufacturer, we focus on eco-conscious manufacturing practices, recyclable materials, and long-lasting products. Our approach helps reduce environmental impact while enhancing healthcare safety and waste control.",
+    icon: CirclePile,
+  },
+];
+
+export const OurCoreValue = [
+  {
+    title: "Quality & Safety Excellence",
+    desc: "We prioritize durability, safety, and reliability in every product we manufacture. As a trusted Sharp Container Manufacturer and Needle Destroyer Manufacturer, we follow strict quality control processes to ensure our products meet biomedical waste management standards and healthcare safety requirements.",
+    icon: LaptopMinimalCheck,
+  },
+  {
+    title: "Customer-Focused Commitment",
+    desc: "Our customers are at the center of everything we do. We believe in transparent communication, timely delivery, and customized solutions that address the specific needs of hospitals, laboratories, and healthcare institutions, building long-term and trusted partnerships.",
+    icon: UserCheck,
+  },
+  {
+    title: "Integrity & Reliability",
+    desc: "We conduct our business with honesty, ethical practices, and consistency. Our clients trust us as a dependable Puncture Proof Box Manufacturer because we deliver on our commitments with professionalism and accountability.",
+    icon: CheckCheck,
+  },
+  {
+    title: "Sustainability & Social Responsibility",
+    desc: "Environmental responsibility is integral to our operations. We focus on recyclable materials, eco-conscious manufacturing, and long-lasting products that reduce waste while supporting safe and sustainable healthcare practices.",
+    icon: Leaf,
+  },
+  {
+    title: "Innovation & Continuous Improvement",
+    desc: "We continuously invest in improved product designs, advanced manufacturing techniques, and process enhancements to stay ahead in the biomedical waste management industry and deliver safer, more efficient solutions.",
+    icon: Atom,
+  },
+  {
+    title: "Driving Innovation & Compliance",
+    desc: "Innovation fuels our growth. We continuously enhance product designs, manufacturing processes, and biomedical waste solutions to meet evolving healthcare needs, regulatory requirements, and safety standards—delivering practical, dependable, and future-ready products.",
+    icon: DraftingCompass,
+  },
+];
+
+export const cirtificate = [
+  "/image/home/cirtificates/1.webp",
+  "/image/home/cirtificates/2.webp",
+  "/image/home/cirtificates/3.webp",
+  "/image/home/cirtificates/4.webp",
+  "/image/home/cirtificates/5.webp",
+  "/image/home/cirtificates/6.webp",
+  "/image/home/cirtificates/7.webp",
+  "/image/home/cirtificates/8.webp",
+  "/image/home/cirtificates/9.webp",
+  "/image/home/cirtificates/10.webp",
+  "/image/home/cirtificates/11.webp",
+];
+
+export const product = [
+  {
+    
+  }
 ];

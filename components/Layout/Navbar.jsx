@@ -20,8 +20,9 @@ const Navbar = () => {
       label: "Product",
       href: "",
       submenu: [
-        { label: "Product 1", href: "/product/1" },
-        { label: "Product 2", href: "/product/2" },
+        { label: "Needle Cutter", href: "/needle-cutter" },
+        { label: "Sharp Containers", href: "/sharp-container" },
+        { label: "Wringer Trolley", href: "/wringer-trolley" },
       ],
     },
     { label: "Contact", href: "/contact" },
@@ -44,7 +45,9 @@ const Navbar = () => {
               src={"/image/nav/logo.webp"}
               className="h-10 w-auto"
             />
-            <p className="text-white text-[12px] font-semibold">Sangam Plastic Industries Pvt. Ltd.</p>
+            <p className="text-white text-[12px] font-semibold">
+              Sangam Plastic Industries Pvt. Ltd.
+            </p>
           </motion.div>
 
           {/* Desktop Menu */}
@@ -70,9 +73,7 @@ const Navbar = () => {
                         rotate: openDropdown === item.label ? 180 : 0,
                       }}
                       transition={{ duration: 0.2 }}
-                    >
-                      
-                    </motion.span>
+                    ></motion.span>
                   )}
                 </motion.a>
 
@@ -84,7 +85,7 @@ const Navbar = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute top-full left-0 mt-2 w-48 bg-[#3a4554] rounded-lg shadow-lg z-50"
+                      className="absolute top-full left-0 mt-2 w-48 bg-[#0e79d7] rounded-lg shadow-2xl z-50 "
                     >
                       {item.submenu.map((subitem, subindex) => (
                         <motion.a
@@ -93,7 +94,7 @@ const Navbar = () => {
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: subindex * 0.05 }}
-                          className="block px-4 py-2 text-gray-100 hover:bg-[#2d3642] hover:font-bold rounded-lg transition-colors first:rounded-t-lg last:rounded-b-lg"
+                          className="block px-4 py-2 text-gray-100 hover:bg-[#1c8ff3] hover:font-bold rounded-lg transition-colors first:rounded-t-lg last:rounded-b-lg"
                         >
                           {subitem.label}
                         </motion.a>
@@ -105,8 +106,21 @@ const Navbar = () => {
             ))}
           </div>
 
-          <div className="bg-white/50 px-3 rounded-xl">
-            <Image src={"/image/nav/gem.webp"} width={1000} height={1000} alt="gem" className="w-40 h-auto"/>
+          <div className="hidden lg:flex lg:gap-4 ">
+            <Image
+              src={"/image/nav/gem-Photoroom.png"}
+              width={1000}
+              height={1000}
+              alt="gem"
+              className="w-auto h-18 rounded-xl p-1"
+            />
+            <Image
+              src={"/image/nav/share-Photoroom.png"}
+              width={1000}
+              height={1000}
+              alt="gem"
+              className="w-auto h-18 rounded-xl p-1"
+            />
           </div>
 
           {/* Mobile menu button */}
@@ -142,7 +156,7 @@ const Navbar = () => {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                       onClick={() => !item.submenu && setIsOpen(false)}
-                      className="block px-4 py-2 rounded-lg text-white hover:bg-[#3a4554] font-medium transition-colors cursor-pointer"
+                      className="block px-4 py-2 rounded-lg text-white hover:bg-[#2d3642] font-medium transition-colors cursor-pointer"
                     >
                       <div className="flex justify-between items-center">
                         <span>{item.label}</span>
